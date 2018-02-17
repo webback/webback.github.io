@@ -459,7 +459,7 @@
 
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery.proximity.js"></script>
 		
 		<script type="text/javascript">
@@ -546,13 +546,80 @@
 				
 			});
 		</script>
-	
-	
-	
-	
-	
-	
-	 <style>
+		
+    <script>
+    
+    $(".toggle-mnu").click(function() {
+        $(this).toggleClass("on");
+        $(".main-mnu").slideToggle();
+        return false;    
+    });
+    
+    $(".main-foot .toggle-mnu").click(function() {
+        $("html, body").animate({scrollTop: $(document).height()}, "slow");
+        return false;
+    });
+    
+    
+    
+    $("body").append('<div class="top"><i class="fa fa-space-shuttle"></i>');
+    
+    $(".top").click(function() {
+        $("html, body").animate({scrollTop: 0}, "slow");
+    });
+    
+    
+	//SVG Fallback
+	if(!Modernizr.svg) {
+		$("img[src*='svg']").attr("src", function() {
+			return $(this).attr("src").replace(".svg", ".png");
+		});
+	};
+
+	//E-mail Ajax Send
+	//Documentation & Example: https://github.com/agragregra/uniMail
+	$("form").submit(function() { //Change
+		var th = $(this);
+		$.ajax({
+			type: "POST",
+			url: "mail.php", //Change
+			data: th.serialize()
+		}).done(function() {
+			alert("Thank you!");
+			setTimeout(function() {
+				// Done Functions
+				th.trigger("reset");
+			}, 1000);
+		});
+		return false;
+	});
+
+	//Chrome Smooth Scroll
+	try {
+		$.browserSelector();
+		if($("html").hasClass("chrome")) {
+			$.smoothScroll();
+		}
+	} catch(err) {
+
+	};
+
+	$("img, a").on("dragstart", function(event) { event.preventDefault(); });
+
+
+    $(window).scroll(function() {
+        if($(this).scrollTop() > $(this).height()) {
+           $(".top").addClass("active"); 
+        }  else {
+           $(".top").removeClass("active"); 
+        }
+    });     
+        
+        
+    </script>
+    
+    
+    <style>
    li {
     list-style-type: none; /* Убираем маркеры */
    }
@@ -560,7 +627,8 @@
     margin-left: 0; /* Отступ слева в браузере IE и Opera */
     padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
    }
-  </style>		    
+         
+    </style>		    
 
 </body>
 </html>
